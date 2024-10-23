@@ -15,18 +15,18 @@ public class TestFuzzyFinder {
   @BeforeEach
   void setUp() {
     finder = new FuzzyFinder();
-    generator = new FuzzyListGenerator();
+    generator = new FuzzyListGenerator(1); //note one iteration specified
   }
 
   @Test
-  void exampleFailingTestWithRandomizedFuzzies() {
-    ArrayList<Fuzzy> fuzzies = generator.randomizedRainbowFuzzies();
-    assertEquals("purple", fuzzies.getFirst().color);
-  }
-
-  @Test
-  void exampleFailingTestWithSortedFuzzies() {
+  void testingSortedLinearAndBinary() {
     ArrayList<Fuzzy> fuzzies = generator.sortedRainbowFuzzies();
-    assertEquals("purple", fuzzies.getFirst().color);
+    int idxlin = finder.linearSearch(fuzzies);
+    int idxbin = finder.binarySearch(fuzzies);
+
+    assertEquals("blue", fuzzies.get(0).color); //blue should be #1 alphabetically
+    assertEquals(1, idxlin); //gold should be #2 alphabetically
+    assertEquals(1, idxbin); //should get same as above
+
   }
 }
